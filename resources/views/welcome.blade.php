@@ -16,7 +16,7 @@
                     <a class="nav-link" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/foo">Foo</a>
+                    <a class="nav-link" href="/user/register">Register</a>
                 </li>
             </ul>
         </nav>

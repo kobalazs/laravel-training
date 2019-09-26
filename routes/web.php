@@ -15,12 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('foo', function () {
-    return 'Hello World';
-});
-
-Route::redirect('bar', 'foo');
-
-Route::get('hello/{name?}', function ($name = null) {
-    return 'Hello ' . ($name ?: 'World');
-});
+Route::get('user/register', 'UserController@register');
