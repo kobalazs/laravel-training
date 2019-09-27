@@ -15,9 +15,23 @@
                 <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                @if (auth()->check())
+                <li class="nav-item">
+                    <span class="nav-link disabled">{{ auth()->user()->name }}</span>
+                </li>
+                <li class="nav-item {{ request()->is('user/logout') ? 'active' : '' }}">
+                    <a class="nav-link" href="/user/logout">Log Out</a>
+                </li>
+                @else
+                <li class="nav-item {{ request()->is('user/login') ? 'active' : '' }}">
+                    <a class="nav-link" href="/user/login">Log In</a>
+                </li>
                 <li class="nav-item {{ request()->is('user/register') ? 'active' : '' }}">
                     <a class="nav-link" href="/user/register">Register</a>
                 </li>
+                @endif
             </ul>
         </nav>
 
