@@ -1,15 +1,11 @@
 @extends('layout')
 
-@section('title', 'Register')
+@section('title', 'Log In')
 
 @section('content')
-<h1>Register</h1>
-<form method="POST" action="/user/register">
+<h1>Log In</h1>
+<form method="POST" action="login">
     @csrf
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" name="name" value="{{ old('name') }}">
-    </div>
     <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" name="email" value="{{ old('email') }}">
@@ -17,10 +13,6 @@
     <div class="form-group">
         <label for="password">Password</label>
         <input type="password" class="form-control" name="password">
-    </div>
-    <div class="form-group">
-        <label for="password">Password (confirmation)</label>
-        <input type="password" class="form-control" name="password_confirmation">
     </div>
     @if ($errors->any())
     <div class="alert alert-danger">

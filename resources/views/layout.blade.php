@@ -17,21 +17,34 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                @if (auth()->check())
+                @auth
                 <li class="nav-item">
                     <span class="nav-link disabled">{{ auth()->user()->name }}</span>
                 </li>
                 <li class="nav-item {{ request()->is('user/logout') ? 'active' : '' }}">
-                    <a class="nav-link" href="/user/logout">Log Out</a>
+                    <a
+                        class="nav-link"
+                        href="logout"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    >Log Out</a>
+                    <form
+                        id="logout-form"
+                        action="logout"
+                        method="POST"
+                        style="display: none;"
+                    >
+                        {{ csrf_field() }}
+                    </form>
                 </li>
-                @else
+                @endauth
+                @guest
                 <li class="nav-item {{ request()->is('user/login') ? 'active' : '' }}">
-                    <a class="nav-link" href="/user/login">Log In</a>
+                    <a class="nav-link" href="login">Log In</a>
                 </li>
                 <li class="nav-item {{ request()->is('user/register') ? 'active' : '' }}">
-                    <a class="nav-link" href="/user/register">Register</a>
+                    <a class="nav-link" href="register">Register</a>
                 </li>
-                @endif
+                @endguest
             </ul>
         </nav>
 
