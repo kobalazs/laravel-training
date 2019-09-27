@@ -15,6 +15,11 @@
                 <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+                @auth
+                <li class="nav-item {{ request()->is('todo') ? 'active' : '' }}">
+                    <a class="nav-link" href="todo">My Todos</a>
+                </li>
+                @endauth
             </ul>
             <ul class="navbar-nav ml-auto">
                 @auth

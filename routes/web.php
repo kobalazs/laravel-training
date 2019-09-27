@@ -18,3 +18,5 @@ Route::get('/home', function () {
 });
 
 Auth::routes();
+
+Route::resource('todo', 'TodoController');
