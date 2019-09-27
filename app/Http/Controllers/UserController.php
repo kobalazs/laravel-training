@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\User;
 
 class UserController extends Controller
 {
@@ -18,6 +20,11 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
-        return $validatedData;
+
+        $user = new User($validatedData);
+        $user->password = Hash::make($validatedData['password']);
+        $user->save();
+
+        return redirect('');
     }
 }
