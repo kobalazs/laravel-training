@@ -10,14 +10,14 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="/">Laravel Training</a>
+            <a class="navbar-brand" href="{{ url('/') }}">Laravel Training</a>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
-                    <a class="nav-link" href="/">Home</a>
+                    <a class="nav-link" href="{{ url('/') }}">Home</a>
                 </li>
                 @auth
                 <li class="nav-item {{ request()->is('todo') ? 'active' : '' }}">
-                    <a class="nav-link" href="todo">My Todos</a>
+                    <a class="nav-link" href="{{ url('todo') }}">My Todos</a>
                 </li>
                 @endauth
             </ul>
@@ -29,7 +29,7 @@
                 <li class="nav-item {{ request()->is('user/logout') ? 'active' : '' }}">
                     <a
                         class="nav-link"
-                        href="logout"
+                        href="{{ url('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
                     >Log Out</a>
                     <form
@@ -44,10 +44,10 @@
                 @endauth
                 @guest
                 <li class="nav-item {{ request()->is('user/login') ? 'active' : '' }}">
-                    <a class="nav-link" href="login">Log In</a>
+                    <a class="nav-link" href="{{ url('login') }}">Log In</a>
                 </li>
                 <li class="nav-item {{ request()->is('user/register') ? 'active' : '' }}">
-                    <a class="nav-link" href="register">Register</a>
+                    <a class="nav-link" href="{{ url('register') }}">Register</a>
                 </li>
                 @endguest
             </ul>

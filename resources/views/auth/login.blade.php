@@ -4,7 +4,7 @@
 
 @section('content')
 <h1>Log In</h1>
-<form method="POST" action="login">
+<form method="POST" action="{{ url('login') }}">
     @csrf
     <div class="form-group">
         <label for="email">Email</label>
