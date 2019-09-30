@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Todo;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('access-todo', function (User $user, Todo $todo) {
+            return $user->id == $todo->user_id;
+        });
     }
 }
