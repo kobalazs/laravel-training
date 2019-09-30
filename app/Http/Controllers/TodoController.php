@@ -15,7 +15,10 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Auth::user()->todos()->paginate(10);
+        $todos = Auth::user()
+            ->todos()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('todo.index', ['todos' => $todos]);
     }
 
@@ -26,7 +29,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('todo.create');
     }
 
     /**
@@ -37,7 +40,16 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => '',
+        ]);
+
+        $todo = new Todo($validatedData);
+        $todo->user_id = Auth::user()->id;
+        $todo->save();
+
+        return redirect('todo');
     }
 
     /**
