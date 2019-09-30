@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class TodoController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Todo::class, 'todo');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -61,9 +65,6 @@ class TodoController extends Controller
      */
     public function show(Todo $todo)
     {
-        if (Gate::denies('access-todo', $todo)) {
-            abort(403, 'Unauthorized action.');
-        }
         return view('todo.show', ['todo' => $todo]);
     }
 
@@ -75,9 +76,6 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        if (Gate::denies('access-todo', $todo)) {
-            abort(403, 'Unauthorized action.');
-        }
         return view('todo.edit', ['todo' => $todo]);
     }
 
@@ -90,9 +88,6 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        if (Gate::denies('access-todo', $todo)) {
-            abort(403, 'Unauthorized action.');
-        }
 
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -113,9 +108,6 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        if (Gate::denies('access-todo', $todo)) {
-            abort(403, 'Unauthorized action.');
-        }
         $todo->delete();
         return redirect('todo');
     }
