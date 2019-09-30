@@ -71,7 +71,7 @@ class TodoController extends Controller
      */
     public function edit(Todo $todo)
     {
-        //
+        return view('todo.edit', ['todo' => $todo]);
     }
 
     /**
@@ -83,7 +83,15 @@ class TodoController extends Controller
      */
     public function update(Request $request, Todo $todo)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => '',
+        ]);
+
+        $todo->fill($validatedData);
+        $todo->save();
+
+        return redirect('todo/' . $todo->id);
     }
 
     /**
