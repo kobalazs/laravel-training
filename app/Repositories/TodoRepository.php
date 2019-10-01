@@ -2,11 +2,18 @@
 namespace App\Repositories;
 
 use App\Todo;
+use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
 
 class TodoRepository implements TodoRepositoryInterface
 {
+    private $auth;
+
+    public function __construct(Auth $auth)
+    {
+        $this->auth = $auth;
+    }
+
     public function get(int $todoId): Todo
     {
         return Todo::findOrFail($todoId);
@@ -14,7 +21,8 @@ class TodoRepository implements TodoRepositoryInterface
 
     public function all(): Builder
     {
-        return Auth::user()
+        return $this->auth
+            ->user()
             ->todos()
             ->orderBy('created_at', 'desc')
             ->getQuery();
@@ -23,7 +31,7 @@ class TodoRepository implements TodoRepositoryInterface
     public function create(array $todoData): Todo
     {
         $todo = new Todo($todoData);
-        $todo->user_id = Auth::user()->id;
+        $todo->user_id = $this->auth->user()->id;
         $todo->save();
         return $todo;
     }
