@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\TodoRepositoryInterface;
 use App\Todo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
 {
-    public function __construct()
+    private $todoRepository;
+
+    public function __construct(TodoRepositoryInterface $todoRepository)
     {
         $this->authorizeResource(Todo::class, 'todo');
+        $this->todoRepository = $todoRepository;
     }
 
     /**
@@ -20,10 +24,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Auth::user()
-            ->todos()
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $todos = $this->todoRepository->all()->paginate(10);
         return view('todo.index', ['todos' => $todos]);
     }
 
@@ -50,9 +51,7 @@ class TodoController extends Controller
             'description' => '',
         ]);
 
-        $todo = new Todo($validatedData);
-        $todo->user_id = Auth::user()->id;
-        $todo->save();
+        $this->todoRepository->create($validatedData);
 
         return redirect('todo');
     }
@@ -94,8 +93,7 @@ class TodoController extends Controller
             'description' => '',
         ]);
 
-        $todo->fill($validatedData);
-        $todo->save();
+        $this->todoRepository->update($todo->id, $validatedData);
 
         return redirect('todo/' . $todo->id);
     }
@@ -108,7 +106,7 @@ class TodoController extends Controller
      */
     public function destroy(Todo $todo)
     {
-        $todo->delete();
+        $this->todoRepository->delete($todo->id);
         return redirect('todo');
     }
 }
