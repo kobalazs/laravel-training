@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('auth/login', 'Api\AuthController@login');
 Route::get('auth/logout', 'Api\AuthController@logout');
+
+Route::resource('todo', 'Api\TodoController');
